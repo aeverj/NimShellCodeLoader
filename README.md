@@ -2,6 +2,10 @@
 快速生成免杀可执行文件
 
 ![codeloader](pic/codeloader.png)
+## 更新：
+
+**20210123：增加三种加载`shellcode`方式，其中两种使用了[winim](https://github.com/khchen/winim)库，需要安装该库才能正常编译**
+
 ## 特点：
 
 1：自带四种加载方式
@@ -58,6 +62,10 @@
 **3、修改`Compiler.ini`文件，添加一行，key为加载方式，value为编译使用的命令行，其中<source>为shellcode文件位置的占位符，<encrypt>为加密方式的占位符，其余可以自行定义。**
 
 ![config](pic/config.png)
+
+## 更新：
+
+**20210123：增加三种加载`shellcode`方式，其中两种使用了[winim](https://github.com/khchen/winim)库，需要安装该库才能正常编译**
 
 ## 引用：
 
