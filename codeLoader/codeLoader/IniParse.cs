@@ -39,8 +39,8 @@ namespace codeLoader
         }
         public List<string> GetKeyList(string section)
         {
-            byte[] buffer = new byte[2048];
-            GetPrivateProfileSection(section, buffer, 2048, inipath);
+            byte[] buffer = new byte[102400];
+            GetPrivateProfileSection(section, buffer, 102400, inipath);
             String[] tmp = Encoding.ASCII.GetString(buffer).Trim('\0').Split('\0');
             List<string> result = new List<string>();
             foreach (String entry in tmp)

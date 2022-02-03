@@ -6,6 +6,8 @@
 
 **20210123：增加三种加载`shellcode`方式，其中两种使用了[winim](https://github.com/khchen/winim)库，需要安装该库才能正常编译**
 
+**20220203：Fix Bug！增加14种加载`shellcode`方式，nim version>=1.6.2**
+
 ## 特点：
 
 1：自带四种加载方式
@@ -76,6 +78,8 @@ https://github.com/Moriarty2016
 https://github.com/knownsec/shellcodeloader
 
 https://github.com/byt3bl33d3r/OffensiveNim
+
+https://github.com/S4R1N/AlternativeShellcodeExec
 
 ## TODO：
 
