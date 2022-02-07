@@ -23,8 +23,6 @@
 
 **`encryption` 存放加密代码文件**
 
-**`module` 中存放c++功能文件**
-
 ![file](pic/file.png)
 
 ## 安装：
@@ -59,15 +57,11 @@
 
 **![code](pic/code.png)**
 
-**2、将c++的功能代码放到`module`文件夹中，在新建的`nim`文件中调用**
+**2、以Direct Load为例，将c++的功能代码放到上图中方框内即可**
 
-**3、修改`Compiler.ini`文件，添加一行，key为加载方式，value为编译使用的命令行，其中<source>为shellcode文件位置的占位符，<encrypt>为加密方式的占位符，其余可以自行定义。**
+**3、修改`Compiler.ini`文件，添加一行，key为加载方式，value为编译使用的命令行，其中`<source>`为shellcode文件位置的占位符，`<encrypt>`为加密方式的占位符，其余可以自行定义。**
 
 ![config](pic/config.png)
-
-## 更新：
-
-**20210123：增加三种加载`shellcode`方式，其中两种使用了[winim](https://github.com/khchen/winim)库，需要安装该库才能正常编译**
 
 ## 引用：
 
