@@ -4,11 +4,11 @@
 ![codeloader](pic/codeloader.png)
 ## 更新：
 
-**20210123：增加三种加载`shellcode`方式，其中两种使用了[winim](https://github.com/khchen/winim)库，需要安装该库才能正常编译**
+**20220620：Fix Bug！增加2种加载`shellcode`方式**
 
 **20220203：Fix Bug！增加14种加载`shellcode`方式，nim version>=1.6.2**
 
-**20220203：Fix Bug！增加2种加载`shellcode`方式**
+**20210123：增加三种加载`shellcode`方式，其中两种使用了[winim](https://github.com/khchen/winim)库，需要安装该库才能正常编译**
 
 ## 特点：
 
