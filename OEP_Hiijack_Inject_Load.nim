@@ -2,7 +2,8 @@
 import public
 
 {.emit: """
-#include<winternl.h>
+#include <windows.h>
+#include <winternl.h>
 
 int OEP(char *shellcode,SIZE_T shellcodeSize)
 {
