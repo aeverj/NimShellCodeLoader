@@ -4,6 +4,8 @@
 ![codeloader](pic/codeloader.png)
 ## 更新：
 
+**20230826：支持nim的v2.0版本，去除base64编码，减小文件生成体积**
+
 **20220620：Fix Bug！增加2种加载`shellcode`方式**
 
 **20220203：Fix Bug！增加14种加载`shellcode`方式，nim version>=1.6.2**
@@ -31,12 +33,14 @@
 ## 安装：
 
 **1、安装`nim`最新版**
+ - 从[下载页面](https://nim-lang.org/install_windows.html)，分别下载nim的安装包和编译器mingw64，将两者解压到任意目录，分别将两个文件夹里面的bin文件夹路径添加到path环境变量中
+ - 打开命令行，输入nim回车，输入gcc或g++回车，返回正常即可之后正常使用nim来编译程序
 
 **2、下载本项目，分别编译`encryption`中的`Tdea.nim`和`Caesar.nim`。**
 
-`nim c -d:release --opt:size Tdea.nim`
+`nim c -d:release -d:strip --opt:size Tdea.nim`
 
-`nim c -d:release --opt:size Caesar.nim`
+`nim c -d:release -d:strip --opt:size Caesar.nim`
 
 **3、编译c#项目，将可执行文件放到当前目录**
 
@@ -80,8 +84,10 @@ https://github.com/S4R1N/AlternativeShellcodeExec
 
 ## TODO：
 
-- 增加更多的加载方式
+- [ ] 添加图标自定义功能
 
-- 增加反沙箱等功能
+- [ ] 增加更多的加载方式
 
-- 增加加密方式
+- [ ] 增加反沙箱等功能
+
+- [ ] 增加加密方式

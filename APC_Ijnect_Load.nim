@@ -1,6 +1,7 @@
 import public
 
 {.emit: """
+#include <windows.h>
 #include <vector>
 #include <TlHelp32.h>
 
