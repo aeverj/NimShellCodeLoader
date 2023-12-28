@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Windows.Forms;
 
 namespace codeLoader
@@ -10,6 +11,7 @@ namespace codeLoader
         IniParse ini;
         string sourcePath;
         string encryption;
+        string icoPath;
         string cmdline;
         Process process;
         public CodeLoaderGen()
@@ -62,12 +64,6 @@ namespace codeLoader
             run_output(textBox_cmdline.Text);
         }
 
-        private void CodeLoaderGen_DragEnter(object sender, DragEventArgs e)
-        {
-            string path = ((System.Array)e.Data.GetData(DataFormats.FileDrop)).GetValue(0).ToString();
-            textBox_codePath.Text = path;
-        }
-
         private void CodeLoaderGen_Load(object sender, EventArgs e)
         {
             ini = new IniParse(@".\Compiler.ini");
@@ -82,6 +78,7 @@ namespace codeLoader
                 Environment.Exit(0);
             }
             cmdlineChangeCallback();
+            icoBox.AllowDrop = true;
         }
 
         private void comboBox_Method_SelectedIndexChanged(object sender, EventArgs e)
@@ -94,6 +91,15 @@ namespace codeLoader
             encryption = radioButton_encrypt.Checked ? "Caesar" : "TDEA";
             string tmpArg = ini.IniReadValue("compile", comboBox_Method.Text);
             cmdline = tmpArg.Replace("<encrypt>", encryption);
+
+            if (icoPath == null)
+            {
+                cmdline = cmdline.Replace(" <ico>", "");
+            }
+            else
+            {
+                cmdline = cmdline.Replace("<ico>", "-d:icoPath=\"" + icoPath.Replace("\\", "/") + "\"");
+            }
             if (!string.IsNullOrEmpty(sourcePath))
             {
                 cmdline = cmdline.Replace("<source>", sourcePath);
@@ -124,6 +130,26 @@ namespace codeLoader
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start(linkLabel1.Text);
+        }
+
+        private void textBox_codePath_DragEnter(object sender, DragEventArgs e)
+        {
+            string path = ((System.Array)e.Data.GetData(DataFormats.FileDrop)).GetValue(0).ToString();
+            textBox_codePath.Text = path;
+        }
+
+        private void icoBox_DragEnter(object sender, DragEventArgs e)
+        {
+            icoPath = ((System.Array)e.Data.GetData(DataFormats.FileDrop)).GetValue(0).ToString();
+            icoBox.Image = Image.FromFile(icoPath);
+            cmdlineChangeCallback();
+        }
+
+        private void button_clear_Click(object sender, EventArgs e)
+        {
+            icoBox.Image = null;
+            icoPath = null;
+            cmdlineChangeCallback();
         }
     }
 }

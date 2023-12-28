@@ -7,4 +7,7 @@ nimblecache/
 htmldocs/
 .idea/
 *.exe
+codeLoader/codeLoader/bin
+codeLoader/codeLoader/obj
+codeLoader/.vs
 # End of https://www.toptal.com/developers/gitignore/api/nim
