@@ -4,6 +4,7 @@
 import strutils
 
 const source {.strdefine.}: string = ""
+# const icoPath {.strdefine.}: string = ""
 var code*:cstring
 var codelen*:cint = 0
 const currsource:string = "\"" & source & "\""
@@ -38,3 +39,21 @@ elif defined(TDEA):
         codelen = cast[cint](plain_len_byte)
     const enbase64 = staticExec("encryption\\Tdea.exe " & currsource)
     de3des(enbase64)
+
+when defined(gcc) and defined(windows) and defined(icoPath):
+    import strformat, os
+    const icoPath {.strdefine.}: string = ""
+    static:
+        const rcName = "demo.rc"
+        const icobject = "demo_icon.o"
+        assert(icoPath!="", "Icon file path not set!")
+        assert(fileExists(icoPath), &"This {icoPath} file does not exist!")
+        const text = &"1 ICON \"{icoPath}\""
+        writeFile(rcName, text)
+        assert(fileExists(rcName),&"Failed to generate resources file \"{rcName}\"!")
+        when defined(x86):
+            {.link: "demo.res".}
+        else:  
+            discard staticExec(&"windres {rcName} {icobject}")
+            assert(fileExists(icobject), &"Failed to generate object file \"{icobject}\"! Maybe the ico file format is not right or windres executable does not exist")
+            {.link: icobject.}
