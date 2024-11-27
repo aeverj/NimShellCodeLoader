@@ -2,6 +2,11 @@
 快速生成免杀可执行文件
 
 ![codeloader](pic/codeloader.png)
+
+## 所获荣誉:
+
+- [入选2022年KCon兵器谱](https://mp.weixin.qq.com/s/JohMsl1WD29LHCHuLf8mVQ)
+
 ## 更新：
 
 **20231228：图标自定义功能**
