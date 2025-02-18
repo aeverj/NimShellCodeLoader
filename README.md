@@ -58,7 +58,7 @@
 
 **1、打开生成器**
 
-**2、将payload拖动到该窗口**
+**2、将payload和图标拖动到该窗口**
 
 ![first](pic/first.png)
 
