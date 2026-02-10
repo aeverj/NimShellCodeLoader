@@ -1,13 +1,30 @@
-# Created by https://www.toptal.com/developers/gitignore/api/nim
-# Edit at https://www.toptal.com/developers/gitignore?templates=nim
-
 ### Nim ###
 nimcache/
 nimblecache/
 htmldocs/
-.idea/
+bin/*
+# 保留 bin 目录结构但忽略内容（配合你添加的 .gitkeep）
+!bin/.gitkeep
+
+### Build/Binary ###
 *.exe
-codeLoader/codeLoader/bin
-codeLoader/codeLoader/obj
-codeLoader/.vs
-# End of https://www.toptal.com/developers/gitignore/api/nim
+*.dll
+*.7z
+*.o
+*.obj
+
+### IDE / Visual Studio ###
+.idea/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+### Specific Project ignores ###
+# 之前的 gui/codeLoader/bin/ 等已经被上面的规则涵盖了，可以精简
+# 但保留特定配置以防万一
+gui/codeLoader/bin/
+gui/codeLoader/obj/
+gui/codeLoader/config
+*.rc
